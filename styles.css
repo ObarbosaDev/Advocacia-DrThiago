@@ -8286,6 +8286,13 @@ body {
   font-size: 2.6rem;
 }
 
+#home .hero-stats-modern .stat-word {
+  display: block;
+  font-size: clamp(1.35rem, 2vw, 1.8rem);
+  line-height: 1.05;
+  overflow-wrap: anywhere;
+}
+
 #home .hero-stats-modern .stat-label {
   color: rgba(230, 236, 246, 0.84) !important;
   font-size: 0.82rem;
@@ -8368,4 +8375,30 @@ body {
     width: 100%;
   }
 
+}
+
+/* ==========================================================================
+   MOBILE NAVBAR COLLAPSE FIX
+   ========================================================================== */
+@media (max-width: 991.98px) {
+  #mainNav .navbar-collapse.collapse:not(.show) {
+    display: none !important;
+  }
+
+  #mainNav .navbar-collapse.collapse.show,
+  #mainNav .navbar-collapse.collapsing {
+    display: block !important;
+    width: 100% !important;
+    flex-basis: 100% !important;
+  }
+
+  #mainNav .nav-shell {
+    flex-wrap: wrap !important;
+  }
+}
+
+@media (min-width: 992px) {
+  #mainNav .navbar-collapse {
+    display: flex !important;
+  }
 }

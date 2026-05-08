@@ -78,7 +78,7 @@ function initNavbar() {
     updateNavbar();
     
     // Fecha menu mobile ao clicar em link
-    const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
+    const navLinks = document.querySelectorAll('.navbar-nav .nav-link, .navbar-nav .nav-cta');
     const navbarCollapse = document.querySelector('.navbar-collapse');
     
     if (navbarCollapse) {
@@ -89,15 +89,15 @@ function initNavbar() {
     navLinks.forEach(link => {
         link.addEventListener('click', function() {
             if (navbarCollapse && navbarCollapse.classList.contains('show')) {
-                const bsCollapse = bootstrap.Collapse.getInstance(navbarCollapse);
-                if (bsCollapse) {
-                    bsCollapse.hide();
-                }
+                const bsCollapse = bootstrap.Collapse.getOrCreateInstance(navbarCollapse, { toggle: false });
+                bsCollapse.hide();
             }
             
-            // Atualiza link ativo
-            navLinks.forEach(l => l.classList.remove('active'));
-            this.classList.add('active');
+            // Atualiza link ativo apenas nos links de navegação.
+            document.querySelectorAll('.navbar-nav .nav-link').forEach(l => l.classList.remove('active'));
+            if (this.classList.contains('nav-link')) {
+                this.classList.add('active');
+            }
         });
     });
 }
@@ -177,6 +177,11 @@ function initCounters() {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 const counter = entry.target;
+                if (!counter.hasAttribute('data-count')) {
+                    observer.unobserve(counter);
+                    return;
+                }
+
                 const target = parseInt(counter.getAttribute('data-count'), 10);
                 
                 if (!counter.classList.contains('counted')) {
